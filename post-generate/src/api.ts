@@ -1,18 +1,9 @@
 import { PostInput, PostOutput } from './types';
 
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const GEMINI_API_URL = import.meta.env.VITE_GEMINI_API_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000/api/gerar';
 
 export async function gerarPost(input: PostInput): Promise<PostOutput> {
-  try {
-    const response = await fetch(GEMINI_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${GEMINI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        prompt: `
+  const prompt = `
 Você é um Redator Sênior Especializado em Marketing Digital. 
 Crie um post com base nos dados:
 Produto: ${input.produto}
@@ -24,23 +15,30 @@ Plataforma: ${input.plataforma}
 Tipo de postagem: ${input.tipoPostagem}
 Objetivo: ${input.objetivo}
 Outros: ${input.outros}
-        `,
-      }),
+`;
+
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
     });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Erro da API (backend):', response.status, errorData);
+      throw new Error(`Erro da API: ${response.status} - ${errorData}`);
+    }
 
     const data = await response.json();
 
     return {
-      titulo: data.title || `Ideia para ${input.produto}`,
-      textoFinal: data.text || `Aqui está um post sobre ${input.produto}`,
-      sugestoes: data.suggestions || ['Use emojis', 'Faça perguntas', 'Inclua hashtags'],
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      titulo: 'Erro ao gerar post',
-      textoFinal: 'Não foi possível gerar o post. Tente novamente.',
+      titulo: `Ideia para ${input.produto}`,
+      textoFinal: data.texto || 'Não foi possível gerar o texto.',
       sugestoes: [],
     };
+  } catch (error) {
+    console.error('Erro ao chamar o backend:', error);
+    throw error;
   }
 }
