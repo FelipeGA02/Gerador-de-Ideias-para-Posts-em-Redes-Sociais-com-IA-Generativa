@@ -1,38 +1,196 @@
-.App {
+.container {
+  max-width: 950px;
+  margin: 2rem auto;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #222;
+  line-height: 1.5;
+  padding: 2rem;
+}
+
+.title {
   text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1a73e8;
+  font-weight: 700;
+  font-size: 2rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.form {
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e0e7ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.form-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 1.8rem;
+}
+
+.full-width {
+  grid-column: 1 / span 2;
+}
+
+.form-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  background: white;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.1);
+  outline: none;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a73e8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1.2rem;
+  padding-right: 2.5rem;
+}
+
+.large-field textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.button {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #1a73e8 0%, #1669c1 100%);
   color: white;
+  border: none;
+  padding: 0.95rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s, box-shadow 0.2s;
+  align-self: center;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.2);
 }
 
-.App-link {
-  color: #61dafb;
+.button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1669c1 0%, #1254a8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
 }
 
-@keyframes App-logo-spin {
+.button:disabled {
+  background: #9bbdf2;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.output-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e0e7ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.output-title {
+  color: #1a73e8;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.output-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.output-subtitle {
+  color: #333;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #1a73e8;
+}
+
+.output-list {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.output-list li {
+  color: #333;
+  padding: 0.8rem 1rem;
+  background: #f8f9fa;
+  border-left: 3px solid #1a73e8;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(5px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem 1.2rem;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .container {
+    padding: 1rem;
   }
 }

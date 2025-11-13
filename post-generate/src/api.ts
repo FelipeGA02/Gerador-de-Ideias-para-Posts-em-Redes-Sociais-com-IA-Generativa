@@ -4,11 +4,53 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000/
 
 export async function gerarPost(input: PostInput): Promise<PostOutput> {
   const prompt = `
-Você é um Redator Sênior Especializado em Marketing Digital. 
-Crie um post com base nos dados:
+Você é um Redator Sênior Especializado em Marketing Digital, Storytelling Persuasivo e Criação de Conteúdo para Redes Sociais.
+Sua tarefa é gerar conteúdos otimizados conforme as informações estruturadas fornecidas pelo usuário.
+Assuma integralmente o papel de redator sênior.
+
+Siga mentalmente esta sequência:
+analisar produto
+analisar público
+analisar tom de voz
+analisar plataforma
+definir elementos criativos
+otimizar texto
+revisar coerência
+(Não liste este raciocínio na resposta.)
+
+Considere os exemplos abaixo como modelo de estilo:
+
+Exemplo A  
+Entrada: Tênis esportivo / Nike / corrida / Instagram / texto curto  
+Saída: “Você não corre. Você voa…”
+
+Exemplo B  
+Entrada: Sabonete vegano / Natura / consumo consciente  
+Saída: “Menos química. Mais natureza…”
+
+Exemplo C  
+Entrada: Galaxy S25 Ultra / TikTok / câmera 8K  
+Saída: roteiro curto em cenas.
+
+Gerar texto claro, conciso, envolvente e alinhado ao tom solicitado.
+
+Antes de entregar o resultado, revise:
+coerência
+tom
+redundâncias
+(Não explique este processo.)
+
+A saída deve conter:
+1. Título interno (frase-conceito)
+2. Texto final
+3. Sugestões complementares
+
+Ajuste formato e ritmo de acordo com a plataforma (Instagram, TikTok, etc.).
+
+Campos Estruturados:
 Produto: ${input.produto}
 Marca: ${input.marca}
-Público Alvo: ${input.publicoAlvo}
+Público-alvo: ${input.publicoAlvo}
 Diferenciais: ${input.diferenciais}
 Tom de voz: ${input.tomDeVoz}
 Plataforma: ${input.plataforma}
@@ -33,9 +75,9 @@ Outros: ${input.outros}
     const data = await response.json();
 
     return {
-      titulo: `Ideia para ${input.produto}`,
+      titulo: data.titulo || `Ideia para ${input.produto}`,
       textoFinal: data.texto || 'Não foi possível gerar o texto.',
-      sugestoes: [],
+      sugestoes: data.sugestoes || [],
     };
   } catch (error) {
     console.error('Erro ao chamar o backend:', error);
