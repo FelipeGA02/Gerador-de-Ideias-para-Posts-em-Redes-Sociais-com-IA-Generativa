@@ -44,6 +44,15 @@ A saída deve conter:
 1. Título interno (frase-conceito)
 2. Texto final
 3. Sugestões complementares
+IMPORTANTE:
+Padronize a resposta usando a seguinte formatação, pois o frontend interpreta o texto com base nesses padrões:
+
+- Use "## " antes do Título interno (h2).
+- Use "**Texto**" para subtítulos (internamente tratados como h3).
+- Use "* item" para listas de sugestões.
+- Parágrafos comuns permanecem sem marcação.
+
+Mantenha esta estrutura sempre. Não use outros formatos de Markdown.
 
 Ajuste formato e ritmo de acordo com a plataforma (Instagram, TikTok, etc.).
 
